@@ -1,121 +1,177 @@
-import React, { useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { 
+  Box,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  CircularProgress,
+  Alert,
+  Stack,
+  Chip
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+      light: '#42a5f5',
+    },
+    secondary: {
+      main: '#9c27b0',
+    },
+    background: {
+      default: '#f5f5f5',
+    }
+  },
+});
 
 function App() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: ''
-  });
-  
-  const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [question, setQuestion] = useState('');
+  const [options, setOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
-    
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
-      newErrors.phone = 'Phone number must be 10 digits';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/data')
+      .then((response) => {
+        const { question, options } = response.data;
+        setQuestion(question);
+        setOptions(options);
+        const initialSelected = options.reduce((acc, option) => {
+          acc[option] = false;
+          return acc;
+        }, {});
+        setSelectedOptions(initialSelected);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setError('Failed to load form data');
+        setIsLoading(false);
+      });
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
-      setSubmitted(true);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  const handleOptionClick = (option) => {
+    setSelectedOptions(prev => ({
       ...prev,
-      [name]: value
+      [option]: !prev[option]
     }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
   };
 
-  const formFields = [
-    { name: 'firstName', label: 'First Name', type: 'text' },
-    { name: 'lastName', label: 'Last Name', type: 'text' },
-    { name: 'email', label: 'Email', type: 'email' },
-    { name: 'phone', label: 'Phone', type: 'tel' }
-  ];
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    const selectedHobbies = Object.entries(selectedOptions)
+      .filter(([_, value]) => value)
+      .map(([key]) => key);
 
-  if (submitted) {
+    setSubmitStatus('submitting');
+    
+    axios
+      .post('http://localhost:4000/data', { selectedHobbies })
+      .then((response) => {
+        console.log('Submitted successfully:', response.data);
+        setSubmitStatus('success');
+        setTimeout(() => setSubmitStatus(null), 3000);
+      })
+      .catch((error) => {
+        console.error('Error submitting:', error);
+        setSubmitStatus('error');
+        setTimeout(() => setSubmitStatus(null), 3000);
+      });
+  };
+
+  if (isLoading) {
     return (
-      <div className="form-container">
-        <h2>Thank you for your submission!</h2>
-        <button 
-          onClick={() => {
-            setFormData({
-              firstName: '',
-              lastName: '',
-              email: '',
-              phone: ''
-            });
-            setSubmitted(false);
-          }}
-          className="submit-button"
-        >
-          Submit Another Response
-        </button>
-      </div>
+      <Container>
+        <Box className="loading-container">
+          <CircularProgress />
+        </Box>
+      </Container>
     );
   }
 
   return (
-    <div className="form-container">
-      <h2>Contact Information</h2>
-      <form onSubmit={handleSubmit}>
-        {formFields.map(field => (
-          <div key={field.name} className="form-field">
-            <label htmlFor={field.name}>{field.label}</label>
-            <input
-              type={field.type}
-              id={field.name}
-              name={field.name}
-              value={formData[field.name]}
-              onChange={handleChange}
-              className={errors[field.name] ? 'error' : ''}
-            />
-            {errors[field.name] && (
-              <span className="error-message">{errors[field.name]}</span>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="sm">
+        <Box className="form-container">
+          <Paper className="form-paper">
+            <Typography 
+              variant="h4" 
+              component="h1" 
+              gutterBottom 
+              align="center" 
+              color="primary"
+              className="form-title"
+            >
+              Form Demo
+            </Typography>
+            
+            {error && (
+              <Alert severity="error" className="error-alert">
+                {error}
+              </Alert>
             )}
-          </div>
-        ))}
-        <button type="submit" className="submit-button">
-          Submit
-        </button>
-      </form>
-    </div>
+
+            <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h6" 
+                gutterBottom 
+                className="question-text"
+              >
+                {question}
+              </Typography>
+
+              <Box className="options-container">
+                {options.map((option) => (
+                  <Chip
+                    key={option}
+                    label={option}
+                    onClick={() => handleOptionClick(option)}
+                    className={`option-chip ${selectedOptions[option] ? 'selected' : ''}`}
+                  />
+                ))}
+              </Box>
+
+              <Stack spacing={2}>
+                <Button 
+                  type="submit" 
+                  variant="contained" 
+                  size="large"
+                  disabled={submitStatus === 'submitting'}
+                  className="submit-button"
+                >
+                  {submitStatus === 'submitting' ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    'Submit'
+                  )}
+                </Button>
+
+                {submitStatus === 'success' && (
+                  <Alert severity="success" className="status-alert">
+                    Form submitted successfully!
+                  </Alert>
+                )}
+
+                {submitStatus === 'error' && (
+                  <Alert severity="error" className="status-alert">
+                    Failed to submit form. Please try again.
+                  </Alert>
+                )}
+              </Stack>
+            </form>
+          </Paper>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 
