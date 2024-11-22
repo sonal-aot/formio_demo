@@ -1,26 +1,47 @@
-module.exports = function override(config) {
-  // Avoid using eval() to prevent CSP violations
-  config.devtool = "cheap-module-source-map"; 
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
-  // Customize output file names for JS and CSS
-  config.output = {
-    ...config.output,
-    filename: "static/js/main.js", // Rename main JS file
-    chunkFilename: "static/js/[name].chunk.js", // Rename chunk JS files
+module.exports = function override(config, env) {
+  // Force webpack to not use eval in development
+  config.devtool = false;
+
+  // Disable chunk splitting to ensure single bundle
+  config.optimization.splitChunks = {
+    cacheGroups: {
+      default: false,
+    },
   };
+  config.optimization.runtimeChunk = false;
 
-  // Modify CSS output filenames
-  const cssRule = config.module.rules.find((rule) =>
-    rule.oneOf?.some((r) => r.test?.toString().includes("css"))
+  // Ensure webpack doesn't use eval
+  if (config.mode === 'development') {
+    config.optimization.minimize = true;
+    config.optimization.minimizer[0].options.terserOptions = {
+      ...config.optimization.minimizer[0].options.terserOptions,
+      format: {
+        comments: false,
+      },
+    };
+  }
+
+  // Add copy plugin to copy manifest.json
+  config.plugins.push(
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public/manifest.json',
+          to: path.resolve(__dirname, 'build/manifest.json'),
+        },
+      ],
+    })
   );
 
-  if (cssRule) {
-    cssRule.oneOf.forEach((rule) => {
-      if (rule.options?.name) {
-        rule.options.name = "static/css/[name].css"; // Rename CSS files
-      }
-    });
-  }
+  // Modify output configuration
+  config.output = {
+    ...config.output,
+    filename: 'static/js/[name].js',
+    chunkFilename: 'static/js/[name].chunk.js',
+  };
 
   return config;
 };

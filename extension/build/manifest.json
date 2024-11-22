@@ -1,13 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "My React App Extension",
+  "name": "Form.io Demo Extension",
   "version": "1.0",
-  "description": "A Chrome extension to display my React app.",
+  "description": "A Chrome extension to display Form.io forms",
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "favicon.ico"
+    "default_icon": {
+      "16": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo512.png"
+    }
   },
-  {
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
-  }  
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo512.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"
+  },
+  "permissions": [],
+  "host_permissions": []
 }
