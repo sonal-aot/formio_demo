@@ -1,0 +1,610 @@
+{
+  "title": "sampleform",
+  "name": "sampleform",
+  "path": "sampleform",
+  "type": "form",
+  "display": "form",
+  "tags": [
+    "common"
+  ],
+  "isBundle": false,
+  "parentFormId": "6746a968678dc0e2b858c21c",
+  "access": [
+    {
+      "type": "read_all",
+      "roles": [
+        "67467d2b13eff987273a0a8b",
+        "67467d2b13eff987273a0a69",
+        "67467d2b13eff987273a0a86"
+      ]
+    },
+    {
+      "type": "update_all",
+      "roles": [
+        "67467d2b13eff987273a0a69"
+      ]
+    },
+    {
+      "type": "delete_all",
+      "roles": [
+        "67467d2b13eff987273a0a69"
+      ]
+    }
+  ],
+  "submissionAccess": [
+    {
+      "type": "create_all",
+      "roles": [
+        "67467d2b13eff987273a0a69"
+      ]
+    },
+    {
+      "type": "read_all",
+      "roles": [
+        "67467d2b13eff987273a0a86"
+      ]
+    },
+    {
+      "type": "update_all",
+      "roles": [
+        "67467d2b13eff987273a0a86"
+      ]
+    },
+    {
+      "type": "delete_all",
+      "roles": [
+        "67467d2b13eff987273a0a69",
+        "67467d2b13eff987273a0a86"
+      ]
+    },
+    {
+      "type": "create_own",
+      "roles": [
+        "67467d2b13eff987273a0a8b"
+      ]
+    },
+    {
+      "type": "read_own",
+      "roles": [
+        "67467d2b13eff987273a0a8b"
+      ]
+    },
+    {
+      "type": "update_own",
+      "roles": [
+        "67467d2b13eff987273a0a8b"
+      ]
+    },
+    {
+      "type": "delete_own",
+      "roles": [
+        "67467d2b13eff987273a0a86"
+      ]
+    }
+  ],
+  "owner": "67467d2b13eff987273a0b08",
+  "components": [
+    {
+      "label": "Text Field",
+      "labelPosition": "top",
+      "placeholder": "",
+      "description": "",
+      "tooltip": "",
+      "prefix": "",
+      "suffix": "",
+      "widget": {
+        "type": "input"
+      },
+      "inputMask": "",
+      "displayMask": "",
+      "applyMaskOn": "change",
+      "allowMultipleMasks": false,
+      "customClass": "",
+      "tabindex": "",
+      "autocomplete": "",
+      "hidden": false,
+      "hideLabel": false,
+      "showWordCount": false,
+      "showCharCount": false,
+      "mask": false,
+      "autofocus": false,
+      "spellcheck": true,
+      "disabled": false,
+      "tableView": true,
+      "modalEdit": false,
+      "multiple": false,
+      "persistent": true,
+      "inputFormat": "plain",
+      "protected": false,
+      "dbIndex": false,
+      "case": "",
+      "truncateMultipleSpaces": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "clearOnHide": true,
+      "customDefaultValue": "",
+      "calculateValue": "",
+      "calculateServer": false,
+      "allowCalculateOverride": false,
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "pattern": "",
+        "customMessage": "",
+        "custom": "",
+        "customPrivate": false,
+        "json": "",
+        "minLength": "",
+        "maxLength": "",
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "unique": false,
+      "validateWhenHidden": false,
+      "errorLabel": "",
+      "errors": "",
+      "key": "textField",
+      "tags": [],
+      "properties": {},
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": "",
+        "json": ""
+      },
+      "customConditional": "",
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "textfield",
+      "dataGridLabel": false,
+      "input": true,
+      "refreshOn": "",
+      "addons": [],
+      "inputType": "text",
+      "id": "etjlj9n",
+      "defaultValue": null
+    },
+    {
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "size": "md",
+      "block": false,
+      "action": "submit",
+      "disableOnInvalid": true,
+      "theme": "primary",
+      "id": "efauf1",
+      "input": true,
+      "placeholder": "",
+      "prefix": "",
+      "customClass": "",
+      "suffix": "",
+      "multiple": false,
+      "defaultValue": null,
+      "protected": false,
+      "unique": false,
+      "persistent": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "redrawOn": "",
+      "tableView": false,
+      "modalEdit": false,
+      "dataGridLabel": true,
+      "labelPosition": "top",
+      "description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "dbIndex": false,
+      "customDefaultValue": "",
+      "calculateValue": "",
+      "calculateServer": false,
+      "widget": {
+        "type": "input"
+      },
+      "attributes": {},
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "overlay": {
+        "style": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "allowCalculateOverride": false,
+      "encrypted": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "properties": {},
+      "allowMultipleMasks": false,
+      "addons": [],
+      "leftIcon": "",
+      "rightIcon": ""
+    },
+    {
+      "label": "Submission Id",
+      "addons": [],
+      "customClass": "",
+      "modalEdit": false,
+      "defaultValue": "",
+      "persistent": true,
+      "protected": false,
+      "dbIndex": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "customDefaultValue": null,
+      "calculateValue": "",
+      "calculateServer": false,
+      "key": "applicationId",
+      "tags": [],
+      "properties": {},
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "hidden",
+      "input": true,
+      "tableView": false,
+      "placeholder": "",
+      "prefix": "",
+      "suffix": "",
+      "multiple": false,
+      "unique": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "dataGridLabel": false,
+      "labelPosition": "top",
+      "Description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "widget": {
+        "type": "input"
+      },
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "allowCalculateOverride": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "allowMultipleMasks": false,
+      "inputType": "hidden",
+      "description": ""
+    },
+    {
+      "label": "Submission Status",
+      "addons": [],
+      "customClass": "",
+      "modalEdit": false,
+      "defaultValue": "",
+      "persistent": true,
+      "protected": false,
+      "dbIndex": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "customDefaultValue": null,
+      "calculateValue": "",
+      "calculateServer": false,
+      "key": "applicationStatus",
+      "tags": [],
+      "properties": {},
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "hidden",
+      "input": true,
+      "tableView": false,
+      "placeholder": "",
+      "prefix": "",
+      "suffix": "",
+      "multiple": false,
+      "unique": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "dataGridLabel": false,
+      "labelPosition": "top",
+      "Description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "widget": {
+        "type": "input"
+      },
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "allowCalculateOverride": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "allowMultipleMasks": false,
+      "inputType": "hidden",
+      "description": ""
+    },
+    {
+      "label": "Current User",
+      "addons": [],
+      "customClass": "",
+      "modalEdit": false,
+      "defaultValue": "",
+      "persistent": true,
+      "protected": false,
+      "dbIndex": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "customDefaultValue": "const localdata = JSON.parse(localStorage.getItem('UserDetails')); const preferredUsername = localdata.preferred_username; value = preferredUsername;",
+      "calculateValue": "",
+      "calculateServer": false,
+      "key": "currentUser",
+      "tags": [],
+      "properties": {},
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "hidden",
+      "input": true,
+      "tableView": false,
+      "placeholder": "",
+      "prefix": "",
+      "suffix": "",
+      "multiple": false,
+      "unique": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "dataGridLabel": false,
+      "labelPosition": "top",
+      "Description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "widget": {
+        "type": "input"
+      },
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "allowCalculateOverride": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "allowMultipleMasks": false,
+      "inputType": "hidden",
+      "description": ""
+    },
+    {
+      "label": "Current User Role",
+      "addons": [],
+      "customClass": "",
+      "modalEdit": false,
+      "defaultValue": "",
+      "persistent": true,
+      "protected": false,
+      "dbIndex": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "customDefaultValue": "const localdata = JSON.parse(localStorage.getItem('UserDetails')); const preferredUserRole = localdata.role; value = preferredUserRole;",
+      "calculateValue": "",
+      "calculateServer": false,
+      "key": "currentUserRole",
+      "tags": [],
+      "properties": {},
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "hidden",
+      "input": true,
+      "tableView": false,
+      "placeholder": "",
+      "prefix": "",
+      "suffix": "",
+      "multiple": false,
+      "unique": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "dataGridLabel": false,
+      "labelPosition": "top",
+      "Description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "widget": {
+        "type": "input"
+      },
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "allowCalculateOverride": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "allowMultipleMasks": false,
+      "inputType": "hidden",
+      "description": ""
+    },
+    {
+      "label": "All Available Roles",
+      "addons": [],
+      "customClass": "",
+      "modalEdit": false,
+      "defaultValue": "",
+      "persistent": true,
+      "protected": false,
+      "dbIndex": false,
+      "encrypted": false,
+      "redrawOn": "",
+      "customDefaultValue": "const localdata = JSON.parse(localStorage.getItem('allAvailableRoles')); value = localdata;",
+      "calculateValue": "",
+      "calculateServer": false,
+      "key": "allAvailableRoles",
+      "tags": [],
+      "properties": {},
+      "logic": [],
+      "attributes": {},
+      "overlay": {
+        "style": "",
+        "page": "",
+        "left": "",
+        "top": "",
+        "width": "",
+        "height": ""
+      },
+      "type": "hidden",
+      "input": true,
+      "tableView": false,
+      "placeholder": "",
+      "prefix": "",
+      "suffix": "",
+      "multiple": false,
+      "unique": false,
+      "hidden": false,
+      "clearOnHide": true,
+      "refreshOn": "",
+      "dataGridLabel": false,
+      "labelPosition": "top",
+      "Description": "",
+      "errorLabel": "",
+      "tooltip": "",
+      "hideLabel": false,
+      "tabindex": "",
+      "disabled": false,
+      "autofocus": false,
+      "widget": {
+        "type": "input"
+      },
+      "validateOn": "change",
+      "validate": {
+        "required": false,
+        "custom": "",
+        "customPrivate": false,
+        "strictDateValidation": false,
+        "multiple": false,
+        "unique": false
+      },
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "allowCalculateOverride": false,
+      "showCharCount": false,
+      "showWordCount": false,
+      "allowMultipleMasks": false,
+      "inputType": "hidden",
+      "description": ""
+    }
+  ],
+  "_id": "6746a968678dc0e2b858c21c",
+  "created": "2024-11-27T05:08:56.561Z",
+  "modified": "2024-11-27T05:09:45.789Z",
+  "machineName": "sampleform"
+}
