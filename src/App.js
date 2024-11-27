@@ -1,178 +1,100 @@
-import axios from 'axios';
-import './App.css';
-import { useEffect, useState } from 'react';
-import { 
-  Box,
-  Container,
-  Typography,
-  Button,
-  Paper,
-  CircularProgress,
-  Alert,
-  Stack,
-  Chip
-} from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./App.css";
+import { ThemeProvider } from "@mui/material/styles";
+import { Box, Container } from "@mui/material";
+import theme from "./theme";
+import LoadingScreen from "./components/LoadingScreen";
+import FormContainer from "./components/FormContainer";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-    },
-    secondary: {
-      main: '#9c27b0',
-    },
-    background: {
-      default: '#f5f5f5',
-    }
-  },
-});
-
-function App() {
-  const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [submitStatus, setSubmitStatus] = useState(null);
+const App = () => {
+  const [questions, setQuestions] = useState([]); // All questions from the API
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Current question index
+  const [loadingState, setLoadingState] = useState({
+    isLoading: true,
+    error: null,
+  });
+  const [selectedAnswers, setSelectedAnswers] = useState({}); // Store selected options for all questions
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/data')
-      .then((response) => {
-        const { question, options } = response.data;
-        setQuestion(question);
-        setOptions(options);
-        const initialSelected = options.reduce((acc, option) => {
-          acc[option] = false;
-          return acc;
-        }, {});
-        setSelectedOptions(initialSelected);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setError('Failed to load form data');
-        setIsLoading(false);
-      });
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/data");
+        setQuestions(response.data.questions); // Assuming API returns the `questions` array
+        setLoadingState({ isLoading: false, error: null });
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+        setLoadingState({
+          isLoading: false,
+          error: "Failed to load questions. Please try again later.",
+        });
+      }
+    };
+
+    fetchQuestions();
   }, []);
 
-  const handleOptionClick = (option) => {
-    setSelectedOptions(prev => ({
+  const handleOptionToggle = (option) => {
+    const questionKey = `question-${currentQuestionIndex}`;
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [option]: !prev[option]
+      [questionKey]: prev[questionKey]?.includes(option)
+        ? prev[questionKey].filter((opt) => opt !== option)
+        : [...(prev[questionKey] || []), option],
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    const selectedHobbies = Object.entries(selectedOptions)
-      .filter(([_, value]) => value)
-      .map(([key]) => key);
-
-    setSubmitStatus('submitting');
-    
-    axios
-      .post('http://localhost:4000/data', { selectedHobbies })
-      .then((response) => {
-        console.log('Submitted successfully:', response.data);
-        setSubmitStatus('success');
-        setTimeout(() => setSubmitStatus(null), 3000);
-      })
-      .catch((error) => {
-        console.error('Error submitting:', error);
-        setSubmitStatus('error');
-        setTimeout(() => setSubmitStatus(null), 3000);
-      });
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    } else {
+      handleSubmit(); // Submit all answers at the end
+    }
   };
 
-  if (isLoading) {
-    return (
-      <Container>
-        <Box className="loading-container">
-          <CircularProgress />
-        </Box>
-      </Container>
-    );
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    console.log("Submitting selected answers:", selectedAnswers);
+
+    try {
+      const response = await axios.post("http://localhost:4000/submit", selectedAnswers);
+      console.log("Submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+    }
+  };
+
+  if (loadingState.isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (loadingState.error) {
+    return <div>{loadingState.error}</div>;
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
-        <Box className="form-container">
-          <Paper className="form-paper">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              gutterBottom 
-              align="center" 
-              color="primary"
-              className="form-title"
-            >
-              Form Demo
-            </Typography>
-            
-            {error && (
-              <Alert severity="error" className="error-alert">
-                {error}
-              </Alert>
-            )}
-
-            <form onSubmit={handleSubmit}>
-              <Typography 
-                variant="h6" 
-                gutterBottom 
-                className="question-text"
-              >
-                {question}
-              </Typography>
-
-              <Box className="options-container">
-                {options.map((option) => (
-                  <Chip
-                    key={option}
-                    label={option}
-                    onClick={() => handleOptionClick(option)}
-                    className={`option-chip ${selectedOptions[option] ? 'selected' : ''}`}
-                  />
-                ))}
-              </Box>
-
-              <Stack spacing={2}>
-                <Button 
-                  type="submit" 
-                  variant="contained" 
-                  size="large"
-                  disabled={submitStatus === 'submitting'}
-                  className="submit-button"
-                >
-                  {submitStatus === 'submitting' ? (
-                    <CircularProgress size={24} color="inherit" />
-                  ) : (
-                    'Submit'
-                  )}
-                </Button>
-
-                {submitStatus === 'success' && (
-                  <Alert severity="success" className="status-alert">
-                    Form submitted successfully!
-                  </Alert>
-                )}
-
-                {submitStatus === 'error' && (
-                  <Alert severity="error" className="status-alert">
-                    Failed to submit form. Please try again.
-                  </Alert>
-                )}
-              </Stack>
-            </form>
-          </Paper>
+        <Box padding={2}>
+          <FormContainer
+            question={questions[currentQuestionIndex]?.question}
+            options={questions[currentQuestionIndex]?.options || []}
+            selectedOptions={selectedAnswers[`question-${currentQuestionIndex}`] || []}
+            onOptionToggle={handleOptionToggle}
+            onNext={handleNext}
+            onBack={handleBack}
+            isLastQuestion={currentQuestionIndex === questions.length - 1}
+            isFirstQuestion={currentQuestionIndex === 0}
+          />
         </Box>
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
