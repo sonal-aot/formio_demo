@@ -62,7 +62,7 @@ const App = () => {
     console.log("Submitting selected answers:", selectedAnswers);
 
     try {
-      const response = await axios.post("http://localhost:4000/submit", selectedAnswers);
+      const response = await axios.post("http://localhost:4000/data", selectedAnswers);
       console.log("Submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting answers:", error);
